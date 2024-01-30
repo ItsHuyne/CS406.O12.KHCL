@@ -14,45 +14,34 @@
 
 Họ tên | Email
 --- | --- 
-PGS.TS. Lê Đình Duy | duyld@uit.edu.vn
-Ths. Phạm Nguyễn Trường An | truonganpn@uit.edu.vn
-
-### Tên nhóm: LHH
+Thầy Đỗ Văn Tiến | tiendv@uit.edu.vn
 ### Các thành viên của nhóm
 Họ tên | MSSV | Email | GitHub
 --- | --- | -- | --
 Hoàng Gia Huy | 19521607 | 19521607@gm.uit.edu.vn | https://github.com/ItsHuyne
+Trang Trường Giang | 19521450 | 19521450@gm.uit.edu.vn | https://github.com/19521450
 </p>
 
 
 
 
 # **BẢNG MỤC LỤC**
-1. [Giải Trình Sau Vấn Đáp](#giaitrinh)
-2. [Tổng Quan Về Đồ Án](#tongquan)
-3. [Xây Dựng Bộ Dữ Liệu](#dulieu)
-4. [Phương pháp, mô hình sử dụng](#method)
-5. [Training Và Đánh Giá Model](#training)
-6. [Hướng Phát Triển Và Cải Tiến](#ungdung)
-7. [Demo mô hình](#demo)
-8. [Nguồn Tham Khảo](#thamkhao)
-
-<a name="giaitrinh"></a>
-# **1. Giải Trình Sau Vấn Đáp**
-
-[Cách thu thập dữ liệu.](#thuthap)
-
-[Đánh giá mô hình.](#danhgia)
-
+1. [Tổng Quan Về Đồ Án](#tongquan)
+2. [Xây Dựng Bộ Dữ Liệu](#dulieu)
+3. [Phương pháp, mô hình sử dụng](#method)
+4. [Training Và Đánh Giá Model](#training)
+5. [Hướng Phát Triển Và Cải Tiến](#ungdung)
+6. [Demo mô hình](#demo)
+7. [Nguồn Tham Khảo](#thamkhao)
 
 
 <a name="tongquan"></a>
-# **2. Tổng Quan Về Đồ Án**
+# **1. Tổng Quan Về Đồ Án**
 
-## **2.1. Ngữ cảnh ứng dụng**
+## **1.1. Ngữ cảnh ứng dụng**
   * Trong bối cảnh hiện tại, việc loại bỏ background được ứng dụng trong rất nhiều lĩnh vực như: chỉnh sửa ảnh hay video, thực tế ảo, tăng cường thực tế,… Từ những phim trường nổi tiếng, trên những bộ máy tính có hiệu suất lớn chỉ nhằm phục vụ việc tách đối tượng ra khỏi nền, đến những chiếc điện thoại smartphone trên tay chúng ta cũng đã có thể tách đối tượng ra khỏi nền của nó trong cùng một tấm ảnh. Để giải quyết vấn đề này, các phương pháp truyền thống thường đòi hỏi sự tương tác của người dùng, như vẽ một hộp giới hạn hay cung cấp “trimaps”. Các thách thức của bài toán bao gồm sự mơ hồ về màu sắc giữa phần đối tượng và phần nền, ranh giới đối tượng phức tạp và đối tượng trong suốt. Trong bài báo cáo này, nhóm sẽ giới thiệu một mô hình học máy có thể giải đáp những thách thức của bài toán Image Matting. 
   
-## **2.2. INPUT và OUTPUT Bài toán**
+## **1.2. INPUT và OUTPUT Bài toán**
   * INPUT: 
     * Một tấm ảnh chụp chân dung của 1 hoặc 2 người ở thế giới thực với đa dạng background, kích thước tấm ảnh đầu vào là 512x512.
  ![](https://github.com/ItsHuyne/CS114.O11.KHCL/blob/main/Image_in_Report/Input_pic.png)
@@ -67,15 +56,15 @@ Hoàng Gia Huy | 19521607 | 19521607@gm.uit.edu.vn | https://github.com/ItsHuyne
 
 
 <a name="dulieu"></a>
-# **3.Xây Dựng Bộ Dữ Liệu**
-## **3.1. Giới thiệu về bộ dữ liệu**
+# **2.Xây Dựng Bộ Dữ Liệu**
+## **2.1. Giới thiệu về bộ dữ liệu**
 * Nhóm sẽ sử dụng bộ dữ liệu bộ dữ liệu P3M-10k(Li, et al., 2021), đây là bộ dữ liệu chuẩn lớn đầu tiên được ẩn danh cho bài toán Privacy-Preserving Portrait Matting. P3M-10k bao gồm 10.000 hình ảnh chân dung mờ chất lượng cao kèm theo alpha mattes chất lượng cao
 * Những hình ảnh trong bộ dữ liệu sẽ có từ một hoặc tối đa là hai người trong cùng một tấm ảnh với phần bối cảnh đa dạng. Ngoài ra, những tấm ảnh có thể được chụp từ chính diện hoặc từ đằng sau lưng.
  ![]( https://github.com/ItsHuyne/CS114.O11.KHCL/blob/main/Image_in_Report/data_1.jpg)
  ![](https://github.com/ItsHuyne/CS114.O11.KHCL/blob/main/Image_in_Report/data_2.jpg)
  ![](https://github.com/ItsHuyne/CS114.O11.KHCL/blob/main/Image_in_Report/data_3.jpg)
 
-### **3.1.1. Thông tin thu thập dữ liệu** <a name= "thuthap"></a>
+### **2.1.1. Thông tin thu thập dữ liệu** <a name= "thuthap"></a>
 
 
 *	Bộ dữ liệu được thu thập, chọn lọc và ghi chú với tầm 10000 tấm ảnh từ nguồn Internet với bản quyền tự do.
@@ -83,7 +72,7 @@ Hoàng Gia Huy | 19521607 | 19521607@gm.uit.edu.vn | https://github.com/ItsHuyne
 *	Bộ dữ liệu sẽ bao gồm những tấm ảnh được làm mờ khuôn mặt do cần phải đáp ứng được yêu cầu của bài toán Privacy-Preserving Portrait Matting. Do đó, với những tấm ảnh chụp chân dung của người không phải là người nổi tiếng sẽ được làm mờ khuôn mặt. 
 
 
-### **3.1.2. Cách làm mờ khuôn mặt**
+### **2.1.2. Cách làm mờ khuôn mặt**
   * Để làm mờ khuôn mặt, tác giả sử dụng các thuật toán phát hiện điểm mốc khuôn mặt (facial landmark detection) để tạo ra những tấm ảnh với khuôn mặt được làm mờ, cụ thể: : 
     *  i. Sử dụng thuật toán điểm mốc để lấy các điểm mốc trên khuôn mặt ( mắt, mũi, miệng,…) 
     *  ii. Tự động tạo ra mask dựa trên các điểm mốc, bao gồm toàn bộ khuôn mặt.
@@ -91,12 +80,12 @@ Hoàng Gia Huy | 19521607 | 19521607@gm.uit.edu.vn | https://github.com/ItsHuyne
     *  iv. Sử dụng Gaussian blur để làm mờ phần trong mask.
 	![](https://github.com/ItsHuyne/CS114.O11.KHCL/blob/main/Image_in_Report/thu_thap.png)
   
-### **3.1.3. Kết quả thu thập dữ liệu**
+### **2.1.3. Kết quả thu thập dữ liệu**
 Sau 2 lần thu thập dữ liệu, nhóm thu thập được thêm hơn 1000 ảnh, chủ yếu là ảnh của người nổi tiếng vì nó khá phổ biến và không yêu cầu bản quyền. Tổng cộng là hơn 11,500 tấm ảnh được thu thập.
 
-## **3.2. Xử lý dữ liệu**
+## **2.2. Xử lý dữ liệu**
 
-### **3.2.1. Chia tập train/val**
+### **2.2.1. Chia tập train/val**
 
   * Tiến hành chia bộ dữ liệu cho 2 tập train/val theo tỉ lệ 10000 cho train và 1500 cho val :
     * Train: 10000 tấm ảnh. Có đặc điểm sau: 
@@ -108,7 +97,7 @@ Sau 2 lần thu thập dữ liệu, nhóm thu thập được thêm hơn 1000 �
       
 
    
-###  **3.2.2. Tăng cường dữ liệu:**
+###  **2.2.2. Tăng cường dữ liệu:**
   * Tiến hành tăng cường dữ liệu trên tập train. Quá trình tăng cường được thực hiện bằng thử viện Albumentation, với các kĩ thuật:
 
 Tên kĩ thuật tăng cường | Lý do áp dụng
@@ -119,10 +108,10 @@ ElasticTransform | biến đổi đàn hồi
 CLAHE | sử dụng phương pháp CLAHE để cân bằng histogram
 
 <a name="model"></a>
-# **4. Phương pháp và mô hình huấn luyện**
-## **4.1 Giới thiệu về mô hình**
+# **3. Phương pháp và mô hình huấn luyện**
+## **3.1 Giới thiệu về mô hình**
   * Chúng tôi chọn mô hình U2-Net là mô hình chính cho bài toán Image Matting. Mô hình U2-Net có cấu trúc U lồng 2 cấp độ, được công bố vào năm 2020 bởi nhóm nghiên cứu dẫn dắt bởi Xuebin Qin. Mô hình đã đạt được giải thưởng “2020 Pattern Regconition BEST PAPER AWARD” với đề tài: “U2-Net: Going deeper with nested U-structure for salient object dectection.” Mô hình U2-Net sẽ không sử dụng bất kì pretrained backbones từ những bài toán phân loại hình ảnh từ trước. Cấu trúc chữ U lồng 2 cấp độ: ở cấp độ thấp nhất, là một khối ReSidual U-Block(RSU), nó có thể trích xuất đặc trưng đa tỷ lệ mà không làm giảm độ phân giải của feature map. Ở cấp độ cao nhất, giống như cấu trúc của U-Net, mỗi giai đoạn được lấp đầy bởi khối RSU.
-## **4.2 ReSidual U-Blocks(RSU)**  
+## **3.2 ReSidual U-Blocks(RSU)**  
   * Được lấy cảm hứng từ cấu trúc của mô hình U-Net, ReSidual U-block (RSU) để trích xuất những đặc trưng đa tỉ lệ trong cùng một giai đoạn mà không giảm chất lượng bản đồ đặc trưng. Cấu trúc của RSU-L(Cin,M,Cout ) với L là số lượng lớp của phần giải mã; Cin, Cout là kênh đầu vào và đầu ra; M là số lượng kênh đầu ra của lớp bên trong là một lớp tích chập (convolutional layers) trong khối RSU. Tổng hợp sẽ có 3 thành phần như sau:
     * Là một input convolution layer để biến cái input feature map x có (HxWxCin) thành intermediate map F1(x) với kênh của Cout. Đây là lớp tích chập đơn giản để trích xuất các features cục bộ của ảnh.
     * Là một  dạng như U-net sử dụng đối xứng cấu trúc encoder và decoder với nhau có chiều dài L là 7 mà nó sẽ lấy Intermediate feature map F1(x) là input và học để trích xuất và mã hóa nó thành muti-scale feature ( nó có thể học được cái đặc trưng từ nhiều tỷ lệ khác nhau). Các muti-scale feature thì được trích xuất xuống dần các feature maps và sẽ được mã hóa lại thành các feature maps có độ phân giải cao bằng cách lấy mẫu tăng dần, ghép nối  và tích chập với nhau. Lớp convolutional cuối cùng trong chuỗi có tốc độ giãn nở là 2, được biểu thị bằng ( d=2 ), cho phép mạng có trường tiếp nhận rộng hơn và thu được nhiều thông tin theo ngữ cảnh hơn mà không cần tăng số lượng tham số.
@@ -141,10 +130,10 @@ CLAHE | sử dụng phương pháp CLAHE để cân bằng histogram
 
 
 <a name="training"></a>
-# **5. Training Và Đánh Giá Model**
+# **4. Training Và Đánh Giá Model**
 
-## **5.3. Các bước tiến hành train**
-### **5.3.1. Môi trường train và đánh giá**
+## **4.3. Các bước tiến hành train**
+### **4.3.1. Môi trường train và đánh giá**
   * Môi trường train và đánh giá:
     * Tiến hành train trên Kaggle, Kaggle là một nền tảng trực tuyến cho cộng đồng Machine Learning (ML) và Khoa học dữ liệu. Kaggle cho phép người dùng chia sẻ, tìm kiếm các bộ dữ liệu; tìm hiểu và xây dựng models, tương tác với những nhà khoa học và kỹ sư ML trên toàn thế giới; tham gia các cuộc thi để có cơ hội chiến thắng những giải thưởng giá trị. Người dùng Kaggle sẽ được hỗ trợ Graphic Processing Unit (GPU) và gần đây có thêm Tensor Processing Unit (TPU) để tăng tốc độ tính toán trong quá trình training cũng như inference.
 
@@ -152,7 +141,7 @@ CLAHE | sử dụng phương pháp CLAHE để cân bằng histogram
   
    * Kaggle có một điểm tiện lợi hơn so với Google Colab là ở chỗ ta có thể save lại các version, nên ta có thể lưu trữ các file weight, cũng như những file log. Tuy nhiên, do có giới hạn về thời gian, cụ thể là 30 giờ/tuần, sẽ cập nhật lại vào thứ 7 hằng tuần nên quá trình train diễn ra thường bị ngắt quãng.
 
-### **5.3.2. U^2-Net**
+### **4.3.2. U^2-Net**
 * Mô hình U2-Net có 2 version: mô hình U2-Net, và mô hình U2-Net-lite. Để tiết kiệm thời gian cũng như tài nguyên, nhóm em sẽ sử dụng phiên bản lite của mô hình U2-Net. 
   
 * Quá trình training model:
@@ -174,19 +163,19 @@ Notebook:
 https://www.kaggle.com/code/huyhonggia/u2net.
 
 
-## **5.4. Đánh giá mô hình** <a name="danhgia"></a>
+## **4.4. Đánh giá mô hình** <a name="danhgia"></a>
 Sau khi thực hiện quá trình training model, để xác định model của chúng ta có đủ tốt hay không cũng như đảm bảo khả năng nhận diện trong tương lai, ta cần có một phương pháp đánh giá với tiêu chí cụ thể. Đối với bài toán Image Matting, các phương pháp đánh giá thường được sử dụng là MAD, MSE, SAD, BCE,… Trong bài toán này, nhóm quyết định sử dụng 3 thang đo gồm: MAD,MSE, SAD để đánh giá độ chính xác của model. Cũng như có thể so sánh với các model khác khi huấn luyện trên dataset P3M-10k.
-### **5.4.1.	Khái niệm**
-#### **5.4.1.1.	MSE(Mean Squared Error).**
+### **4.4.1.	Khái niệm**
+#### **4.4.1.1.	MSE(Mean Squared Error).**
 MSE là thang đo cho phép xác định độ lệch không khí của giá trị dự đoán và giá trị thực tế. Để tính MSE, ta tính tổng các giá trị lệch không khí của các giá trị dự đoán và giá trị thực tế, sau đó chia cho số lượng các giá trị dự đoán và giá trị thực tế.  
 
-#### **5.4.1.2. MAD(Mean Absolute Difference) **
+#### **4.4.1.2. MAD(Mean Absolute Difference) **
 MAD là thang đo cho phép xác định độ lệch trung bình của giá trị dự đoán và giá trị thực tế. Để tính MAD, ta tính tổng các giá trị lệch trung bình của các giá trị dự đoán và giá trị thực tế, sau đó chia cho số lượng các giá trị dự đoán và giá trị thực tế.
 
 #### **SAD (Sum of Absolute Differences)**
 SAD là thang đo cho phép xác định độ lệch trung bình của giá trị dự đoán và giá trị thực tế. Để tính SAD, ta tính tổng các giá trị lệch trung bình của các giá trị dự đoán và giá trị thực tế.
 
-#### **5.4.2 Đánh giá**
+#### **4.4.2 Đánh giá**
 Sau khi huấn luyện mô hình trên 450 epochs, mỗi epoch tốn khoảng 1 tiếng hơn, giá trị các hàm loss trên tập validation không thay đổi đáng kể, còn hàm loss thì có xu hướng giảm nhẹ xung quanh 0.985. Cho rằng mô hình đã hội tụ nên nhóm dừng train, chọn ra best.weights để tiến hành đánh giá.
 Trong đó:
 
@@ -196,8 +185,8 @@ Từ kết quả, ta đúc kết được rằng, mô hình chưa thật sự hi
 
 
 <a name="ungdung"></a>
-# **6. Ứng Dụng và Hướng Phát Triển**
-## **6.1. Cải tiến**
+# **5. Ứng Dụng và Hướng Phát Triển**
+## **5.1. Cải tiến**
 
 Để có thể đưa mô hình này vào ứng dụng rộng rãi, cần phải cải tiến về một số khía cạnh:
 
@@ -208,7 +197,7 @@ Từ kết quả, ta đúc kết được rằng, mô hình chưa thật sự hi
 *	Huấn luyện bộ dữ liệu bằng model U^2-Net phiên bản đầy đủ và với số lượng epochs lớn hơn.
 *	Thay đổi phương pháp tiếp cận cũng như thay đổi cách fine-tune mô hình để có thể cải thiện mô hình và kết quả dự đoán.
 
-## **6.2. Hướng phát triển trong tương lai**
+## **5.2. Hướng phát triển trong tương lai**
 
 *	-	Cải tiến mô hình để có thể inference Real-time.
 *	-	Huấn luyện mô hình với dữ liệu được tăng cường bằng cách thay đổi background
@@ -216,9 +205,17 @@ Từ kết quả, ta đúc kết được rằng, mô hình chưa thật sự hi
 
 
 <a name="demo"></a>
-# **7. Demo mô hình**
+# **6. Demo mô hình**
 
- [Demo.](./Demo/)
+ [Demo.](./U2Net_remove_background_app/)
+
+ # **7. Phân chia công việc**
+ <p>
+	 Sinh viên | Công việc thực hiện
+	 -- | --
+	 Hoàng Gia Huy | Training mô hình, chuẩn bị dữ liệu, tăng cường dữ liệu, thuyết trình.
+	 Trang Trường Giang | Thu thập dữ liệu, xử lí dữ liệu, chuẩn bị slide, viết báo cáo, thuyết trình.
+ </p>
 
 <a name="thamkhao"></a>
 # **8. Tài liệu tham khảo**
